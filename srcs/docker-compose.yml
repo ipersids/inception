@@ -1,0 +1,84 @@
+services:
+  mariadb:
+    # Builds with custom Docker file 
+    # instead of using pre-built image (mariadb:10.11)
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    # Sets a fixed name for the container 
+    # instead of auto-generated (srcs_mariadb_1)
+    container_name: mariadb
+    # Mounts secret files inside the container -> /run/secrets/
+    # Secrets not visible in `docker inspect`
+    # Passwords init in srcs/requirements/mariadb/tools/mariadb_entrypoint.sh
+    secrets:
+      - db_password
+      - db_root_password
+    # Sets environment variables inside the container
+    # first looks for .env file, then shell environment variables
+    environment:
+      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+    # Maps host port to container port ("HOST_PORT:CONTAINER_PORT")
+    # Could be more than one
+    ports:
+      - "3306:3306"
+    # Creates storage for database data:
+    # Data survives container restarts and deletion
+    volumes:
+      - ${HOME}/data/mariadb:/var/lib/mysql
+    # Connects container to a specific network
+    # Containers on same network can communicate
+    networks:
+      - backend
+    restart: unless-stopped
+  
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    secrets:
+      - db_password
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_TABLE_PREFIX=wp_
+      - WORDPRESS_DEBUG=${WORDPRESS_DEBUG:-false}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    ports:
+      - "9000:9000"
+    volumes:
+      - ${HOME}/data/wordpress:/var/www/html
+    networks:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+
+# Defines where Docker finds secret files on the host
+secrets:
+  credentials:
+    file: ../secrets/credentials.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+
+# Creates a custom network for containers to communicate   
+# Default, isolated network -> bridge
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true 
+
+# Declares a named volume that Docker manages
+volumes:
+  mariadb_data:
+  wordpress_data:

@@ -1,0 +1,526 @@
+# MariaDB Docker Build - Ignore File
+# Place this in: srcs/requirements/mariadb/.dockerignore
+
+##########################################################################
+# VERSION CONTROL
+##########################################################################
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+.gitkeep
+**/.git/
+**/.gitignore
+
+##########################################################################
+# DOCUMENTATION & README FILES
+##########################################################################
+README.md
+readme.md
+README.txt
+*.md
+*.txt
+docs/
+documentation/
+CHANGELOG*
+HISTORY*
+LICENSE*
+NOTICE*
+AUTHORS*
+CONTRIBUTORS*
+COPYING*
+
+##########################################################################
+# IDE & EDITOR FILES
+##########################################################################
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# IntelliJ IDEA / PhpStorm / WebStorm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+.vim/
+.vimrc
+
+# Emacs
+*~
+\#*\#
+.\#*
+.emacs.d/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# Nano
+*.save
+
+##########################################################################
+# OPERATING SYSTEM FILES
+##########################################################################
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.nfs*
+.directory
+
+##########################################################################
+# TEMPORARY & CACHE FILES
+##########################################################################
+*.tmp
+*.temp
+*.cache
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+.cache/
+cache/
+tmp/
+temp/
+.tmp/
+
+##########################################################################
+# LOG FILES
+##########################################################################
+*.log
+*.logs
+logs/
+log/
+*.out
+*.err
+access.log*
+error.log*
+mysql.log*
+mariadb.log*
+slow-query.log*
+general.log*
+*.pid
+
+##########################################################################
+# DATABASE FILES (Don't copy existing data)
+##########################################################################
+*.db
+*.sqlite
+*.sqlite3
+*.mdb
+*.accdb
+data/
+*.sql
+*.dump
+backup/
+backups/
+dump/
+dumps/
+
+# MariaDB/MySQL specific data directories
+mysql/
+mariadb/
+var/lib/mysql/
+ib_logfile*
+ibdata*
+*.frm
+*.MYD
+*.MYI
+*.opt
+*.pid
+relay-log.*
+mysql-bin.*
+*.binlog
+
+##########################################################################
+# SECRETS & SENSITIVE FILES
+##########################################################################
+# Never include any secrets in the image
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.csr
+*.passphrase
+*.secret
+*.token
+*.password
+*.credentials
+credentials.txt
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+.env.staging
+config.json
+settings.json
+*.conf
+local.conf
+production.conf
+
+# SSH keys
+.ssh/
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+known_hosts
+authorized_keys
+
+##########################################################################
+# BUILD & COMPILATION FILES
+##########################################################################
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.com
+*.class
+*.jar
+build/
+dist/
+target/
+bin/
+obj/
+*.build
+Makefile.in
+configure.in
+autom4te.cache/
+
+##########################################################################
+# PACKAGE MANAGERS & DEPENDENCIES
+##########################################################################
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/
+.pnp.*
+.yarn-integrity
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+pip-log.txt
+pip-delete-this-directory.txt
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ruby
+.bundle/
+vendor/bundle/
+.rbenv-version
+.ruby-version
+
+# PHP
+vendor/
+composer.phar
+composer.lock
+.phpunit.result.cache
+
+##########################################################################
+# TESTING FILES
+##########################################################################
+test/
+tests/
+testing/
+__tests__/
+spec/
+specs/
+*.test
+*.spec
+*.test.sh
+*.spec.sh
+test_*
+*_test.*
+*_spec.*
+coverage/
+.coverage
+.nyc_output
+junit.xml
+phpunit.xml
+
+##########################################################################
+# CI/CD & DEPLOYMENT FILES
+##########################################################################
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+.jenkins/
+Jenkinsfile
+.drone.yml
+.buildkite/
+.semaphore/
+azure-pipelines.yml
+bitbucket-pipelines.yml
+.teamcity/
+appveyor.yml
+.codeship-steps.yml
+.codeship-services.yml
+
+# Deployment
+deploy/
+deployment/
+k8s/
+kubernetes/
+terraform/
+ansible/
+puppet/
+chef/
+vagrant/
+Vagrantfile
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile.dev
+Dockerfile.test
+Dockerfile.prod
+.dockerignore
+
+##########################################################################
+# DEVELOPMENT & DEBUG FILES
+##########################################################################
+debug/
+*.debug
+*.dSYM/
+.gdb_history
+core
+core.*
+vgcore.*
+.valgrind
+*.stackdump
+
+##########################################################################
+# ARCHIVE & COMPRESSED FILES
+##########################################################################
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.tar.xz
+*.txz
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+*.lz
+*.lzma
+*.Z
+*.deb
+*.rpm
+*.dmg
+*.iso
+*.img
+
+##########################################################################
+# MEDIA FILES (Usually not needed in MariaDB container)
+##########################################################################
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.svg
+*.ico
+*.webp
+*.mp3
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mkv
+*.m4v
+*.3gp
+*.wav
+*.flac
+*.aac
+*.ogg
+
+##########################################################################
+# OFFICE & DOCUMENT FILES
+##########################################################################
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+*.rtf
+
+##########################################################################
+# MARIADB SPECIFIC EXCLUDES
+##########################################################################
+# MariaDB test suite (huge and not needed)
+mysql-test/
+sql-bench/
+mariadb-test/
+
+# MariaDB source files (if building from source)
+sql/
+storage/
+plugin/
+scripts/
+support-files/
+man/
+mysql-test/
+sql-bench/
+win/
+cmake/
+extra/
+regex/
+zlib/
+pcre/
+
+# MariaDB build artifacts
+*.gcno
+*.gcda
+*.gcov
+libmysql*
+mysql_config*
+
+# MariaDB configuration examples (we have our own)
+my-*.cnf
+*.cnf.sample
+my.cnf.example
+
+##########################################################################
+# PROJECT STRUCTURE EXCLUDES
+##########################################################################
+# Don't copy other service directories
+../nginx/
+../wordpress/
+../secrets/
+../../secrets/
+
+# Don't copy parent project files
+../docker-compose.yml
+../Makefile
+../.env*
+../../docker-compose.yml
+../../Makefile
+../../.env*
+
+##########################################################################
+# RUNTIME & PROCESS FILES
+##########################################################################
+*.pid
+*.sock
+*.lock
+.pid
+.sock
+run/
+var/run/
+proc/
+
+##########################################################################
+# MISCELLANEOUS
+##########################################################################
+# Vim session files
+Session.vim
+
+# Eclipse
+.project
+.metadata
+.classpath
+.settings/
+
+# NetBeans
+nbproject/
+
+# JetBrains
+.idea/
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+
+# Local configuration override files
+local.*
+*.local
+
+# Patch files
+*.patch
+*.diff
+
+# Backup files created by editors
+*~
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.save
+*.swp
+*.tmp
+
+##########################################################################
+# FINAL SAFETY NET
+##########################################################################
+# Catch any remaining sensitive patterns
+*secret*
+*password*
+*credential*
+*token*
+*auth*
+*key*
+*.private
+*.confidential
+
+# End of .dockerignore
