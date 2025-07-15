@@ -2,21 +2,9 @@
 user = mysql
 socket = /var/run/mysqld/mysqld.sock
 port = 3306
-basedir = /usr
 datadir = /var/lib/mysql
-tmpdir = /tmp
-
-# Network settings
 bind-address = 0.0.0.0
 skip-name-resolve
-
-# Character set
-character-set-server = utf8mb4
-collation-server = utf8mb4_unicode_ci
-
-# Performance
-innodb_buffer_pool_size = 128M
-max_connections = 100
 
 [mysql]
 default-character-set = utf8mb4

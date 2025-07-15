@@ -1,13 +1,43 @@
-# WordPress Docker Build - Ignore File
-# Place this in: srcs/requirements/wordpress/.dockerignore
-
-##########################################################################
-# VERSION CONTROL
-##########################################################################
+# Version control
 .git/
 .gitignore
-.gitattributes
-.gitmodules
+
+# Documentation
+*.md
+*.txt
+docs/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.cache
+tmp/
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.secret
+.env*
+
+# PHP/WordPress files
+vendor/
+composer.lock
+node_modules/
+wp-content/uploads/
+
+# Build files
+build/
+dist/
 .gitkeep
 **/.git/
 **/.gitignore
