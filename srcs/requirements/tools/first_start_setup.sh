@@ -24,4 +24,5 @@ mkdir -p "$HOME/data/mariadb" "$HOME/data/wordpress"
 chmod -R 755 "$HOME/data" 2>/dev/null || sudo chmod -R 755 "$HOME/data"
 echo "✓ Created data directories"
 
-echo "Setup complete. \nRun: make build && make up"
+echo "Setup complete."
+echo "Run: make build && make up"

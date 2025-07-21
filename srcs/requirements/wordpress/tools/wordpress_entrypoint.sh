@@ -23,10 +23,10 @@ if [ ! -f "wp-config.php" ]; then
     [ ! -f "wp-load.php" ] && wp core download --allow-root
     cat > wp-config.php << EOF
 <?php
-define('DB_NAME', '$WORDPRESS_DB_NAME');
-define('DB_USER', '$WORDPRESS_DB_ADMIN_USER');
-define('DB_PASSWORD', '$DB_ROOT_PASSWORD');
 define('DB_HOST', '$WORDPRESS_DB_HOST');
+define('DB_NAME', '$WORDPRESS_DB_NAME');
+define('DB_USER', '$WORDPRESS_DB_USER');
+define('DB_PASSWORD', '$DB_PASSWORD');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 $(cat /run/secrets/credentials)
