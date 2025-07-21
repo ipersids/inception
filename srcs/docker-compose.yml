@@ -41,13 +41,17 @@ services:
       - mariadb
     secrets:
       - db_password
+      - db_root_password
+      - credentials
     environment:
-      - WORDPRESS_DB_HOST=${WORDPRESS_DB_USER}
+      - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
       - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
       - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
       - WORDPRESS_DB_USER_EMAIL=${WORDPRESS_DB_USER_EMAIL}
       - WORDPRESS_DB_ADMIN_USER=${WORDPRESS_DB_ADMIN_USER}
       - WORDPRESS_DB_ADMIN_USER_EMAIL=${WORDPRESS_DB_ADMIN_USER_EMAIL}
+      - WORDPRESS_DB_TABLE_PREFIX=${WORDPRESS_DB_TABLE_PREFIX}
+      - WORDPRESS_TITLE=${WORDPRESS_TITLE}
       - DOMAIN_NAME=${DOMAIN_NAME}
     # Port 9000 NOT exposed to host
     # Only accessible internally by NGINX via backend network
