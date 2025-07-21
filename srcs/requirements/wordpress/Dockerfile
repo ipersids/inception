@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 alpine:3.20
+FROM alpine:3.20
 
 RUN apk add --no-cache \
     php82 php82-fpm php82-mysqli php82-json php82-openssl \

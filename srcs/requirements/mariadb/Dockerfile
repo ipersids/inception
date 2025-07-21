@@ -1,9 +1,9 @@
-FROM --platform="linux/arm64" alpine:3.20
+FROM alpine:3.20
 
 RUN apk add --no-cache mariadb mariadb-client mariadb-server-utils
 
-RUN addgroup -g 1000 mysql || true && \
-    adduser -D -u 1000 -G mysql -h /var/lib/mysql -s /bin/sh mysql || true
+RUN addgroup mysql || true && \
+    adduser -D -G mysql -h /var/lib/mysql -s /bin/sh mysql || true
 
 RUN mkdir -p /var/lib/mysql /var/run/mysqld /etc/mysql/conf.d \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
