@@ -18,13 +18,3 @@ README*
 # OS files
 .DS_Store
 Thumbs.db
-
-# Secrets and config
-secrets/
-.env*
-
-# Database files
-*.sql
-*.dump
-data/
-mysql/

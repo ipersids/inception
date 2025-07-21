@@ -17,9 +17,9 @@ services:
     # Sets environment variables inside the container
     # first looks for .env file, then shell environment variables
     environment:
-      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+      - MYSQL_USER=${WORDPRESS_DB_USER}
+      - MYSQL_ADMIN_USER=${WORDPRESS_DB_ADMIN_USER}
     # Port 3306 NOT exposed to host for security
     # Only accessible internally via backend network
     # Creates storage for database data:
@@ -41,12 +41,17 @@ services:
       - mariadb
     secrets:
       - db_password
+      - db_root_password
+      - credentials
     environment:
-      - WORDPRESS_DB_HOST=mariadb:3306
-      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
-      - WORDPRESS_DB_USER=${MYSQL_USER}
-      - WORDPRESS_TABLE_PREFIX=wp_
-      - WORDPRESS_DEBUG=${WORDPRESS_DEBUG:-false}
+      - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+      - WORDPRESS_DB_USER_EMAIL=${WORDPRESS_DB_USER_EMAIL}
+      - WORDPRESS_DB_ADMIN_USER=${WORDPRESS_DB_ADMIN_USER}
+      - WORDPRESS_DB_ADMIN_USER_EMAIL=${WORDPRESS_DB_ADMIN_USER_EMAIL}
+      - WORDPRESS_DB_TABLE_PREFIX=${WORDPRESS_DB_TABLE_PREFIX}
+      - WORDPRESS_TITLE=${WORDPRESS_TITLE}
       - DOMAIN_NAME=${DOMAIN_NAME}
     # Port 9000 NOT exposed to host
     # Only accessible internally by NGINX via backend network
@@ -71,7 +76,6 @@ services:
     volumes:
       - ${HOME}/data/wordpress:/var/www/html
     networks:
-      - frontend
       - backend
     restart: unless-stopped
 
@@ -88,13 +92,5 @@ secrets:
 # Creates a custom network for containers to communicate   
 # Default, isolated network -> bridge
 networks:
-  frontend:
-    driver: bridge
   backend:
     driver: bridge
-    internal: true 
-
-# Declares a named volume that Docker manages
-volumes:
-  mariadb_data:
-  wordpress_data:
