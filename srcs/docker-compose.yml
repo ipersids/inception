@@ -17,9 +17,9 @@ services:
     # Sets environment variables inside the container
     # first looks for .env file, then shell environment variables
     environment:
-      - MYSQL_ROOT_USER=${WORDPRESS_DB_ADMIN_USER}
       - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
       - MYSQL_USER=${WORDPRESS_DB_USER}
+      - MYSQL_ADMIN_USER=${WORDPRESS_DB_ADMIN_USER}
     # Port 3306 NOT exposed to host for security
     # Only accessible internally via backend network
     # Creates storage for database data:
