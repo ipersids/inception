@@ -1,29 +1,40 @@
-setup:
-	@mkdir -p secrets
-	@openssl rand -base64 32 > secrets/db_password.txt
-	@openssl rand -base64 32 > secrets/db_root_password.txt
-	@curl -s https://api.wordpress.org/secret-key/1.1/salt/ > secrets/credentials.txt
-	mkdir -p ${HOME}/data/mariadb
-	mkdir -p ${HOME}/data/wordpress
-	chmod 755 ${HOME}/data
-	chmod 755 ${HOME}/data/mariadb
-	chmod 755 ${HOME}/data/wordpress
-	echo "Data directories created for user: ${HOME}"
-	echo "\nMove .env file to ~/srcs\n"
+# Include environment variables
+-include srcs/.env
+export
 
-all: setup build up
+all: env-check setup build up
 
-up:
-	docker-compose -f srcs/docker-compose.yml up -d
+env-check:
+	@if [ ! -f "srcs/.env" ]; then \
+		echo "❌ srcs/.env not found!"; \
+		echo "Please create srcs/.env file first"; \
+		exit 1; \
+	fi
 
-down:
-	docker-compose -f srcs/docker-compose.yml down
+setup: env-check
+	@chmod +x srcs/requirements/tools/first_start_setup.sh || sudo chmod +x srcs/requirements/tools/first_start_setup.sh
+	@srcs/requirements/tools/first_start_setup.sh
 
 build:
-	docker-compose -f srcs/docker-compose.yml build --no-cache
+	@docker-compose -f srcs/docker-compose.yml build --no-cache
+
+up:
+	@docker-compose -f srcs/docker-compose.yml up
+
+up-d:
+	@docker-compose -f srcs/docker-compose.yml up -d
+
+down:
+	@docker-compose -f srcs/docker-compose.yml down
+
+clean:
+	@docker system prune -f
 
 fclean: down
-	docker system prune -a
-	docker volume prune -a
-	rm -rf ${HOME}/data/mariadb
-	rm -rf ${HOME}/data/wordpress
+	@docker-compose -f srcs/docker-compose.yml down -v --rmi all --remove-orphans
+	@docker system prune -af --volumes
+	@rm -rf $(HOME)/data secrets srcs/.env
+
+re: fclean all
+
+.PHONY: all setup build up up-d down clean fclean
