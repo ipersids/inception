@@ -30,7 +30,7 @@ services:
     # Creates storage for database data:
     # Data survives container restarts and deletion
     volumes:
-      - ${HOME}/data/mariadb:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     # Connects container to a specific network
     # Containers on same network can communicate
     networks:
@@ -62,7 +62,7 @@ services:
     # Port 9000 NOT exposed to host
     # Only accessible internally by NGINX via backend network
     volumes:
-      - ${HOME}/data/wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     networks:
       - backend
     restart: unless-stopped
@@ -80,7 +80,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ${HOME}/data/wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     networks:
       - backend
     restart: unless-stopped
@@ -100,3 +100,18 @@ secrets:
 networks:
   backend:
     driver: bridge
+
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
+      
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/mariadb
