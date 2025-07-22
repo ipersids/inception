@@ -11,7 +11,9 @@ RUN mkdir -p /var/lib/mysql /var/run/mysqld /etc/mysql/conf.d \
 
 COPY conf/mariadb.cnf /etc/my.cnf
 COPY tools/mariadb_entrypoint.sh /usr/local/bin/
+COPY tools/healthcheck.sh /usr/local/bin/healthcheck.sh
 RUN chmod +x /usr/local/bin/mariadb_entrypoint.sh
+RUN chmod +x /usr/local/bin/healthcheck.sh
 
 EXPOSE 3306
 ENTRYPOINT ["/usr/local/bin/mariadb_entrypoint.sh"]

@@ -11,27 +11,35 @@ env-check:
 		exit 1; \
 	fi
 
-setup: env-check
-	@chmod +x srcs/requirements/tools/first_start_setup.sh || sudo chmod +x srcs/requirements/tools/first_start_setup.sh
-	@srcs/requirements/tools/first_start_setup.sh
+setup:
+	@if [ ! -d "secrets" ]; then \
+		chmod +x srcs/requirements/tools/first_start_setup.sh || sudo chmod +x srcs/requirements/tools/first_start_setup.sh; \
+		srcs/requirements/tools/first_start_setup.sh; \
+	fi
 
 build:
-	@docker-compose -f srcs/docker-compose.yml build --no-cache
+	docker-compose -f srcs/docker-compose.yml build
 
 up:
-	@docker-compose -f srcs/docker-compose.yml up -d
+	docker-compose -f srcs/docker-compose.yml up -d
 
 down:
-	@docker-compose -f srcs/docker-compose.yml down
+	docker-compose -f srcs/docker-compose.yml down
 
 clean:
+	@docker-compose -f srcs/docker-compose.yml down --remove-orphans
 	@docker system prune -f
+	@echo "Basic Docker cleanup done."
 
-fclean: down
+fclean: clean
 	@docker-compose -f srcs/docker-compose.yml down -v --rmi all --remove-orphans
 	@docker system prune -af --volumes
-	@rm -rf $(HOME)/data secrets srcs/.env
+	@echo "Docker images, volumes, and orphans fully removed."
 
+dclean: fclean
+	@echo "Removing persistent local data and secrets..."
+	@sudo rm -rfv $(HOME)/data secrets srcs/.env || echo "Some files may not exist or couldn't be deleted."
+	@echo "Project directory fully reset."
 re: fclean all
 
-.PHONY: all setup build up up-d down clean fclean
+.PHONY: all setup build up up-d down clean fclean dclean

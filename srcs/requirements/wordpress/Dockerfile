@@ -37,7 +37,7 @@ COPY tools/wordpress_entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress_entrypoint.sh
 
 WORKDIR /var/www/html
-USER www-data
+#USER www-data
 EXPOSE 9000
 
 CMD ["/usr/local/bin/wordpress_entrypoint.sh"]

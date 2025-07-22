@@ -30,7 +30,7 @@ define('DB_PASSWORD', '$DB_PASSWORD');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 $(cat /run/secrets/credentials)
-\$table_prefix = 'wp_';
+\$table_prefix = '$WORDPRESS_DB_TABLE_PREFIX';
 define('WP_DEBUG', false);
 if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/');
 require_once ABSPATH . 'wp-settings.php';

@@ -8,6 +8,11 @@ services:
     # Sets a fixed name for the container 
     # instead of auto-generated (srcs_mariadb_1)
     container_name: mariadb
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 5s
+      timeout: 20s
+      retries: 5
     # Mounts secret files inside the container -> /run/secrets/
     # Secrets not visible in `docker inspect`
     # Passwords init in srcs/requirements/mariadb/tools/mariadb_entrypoint.sh
@@ -38,7 +43,8 @@ services:
       dockerfile: Dockerfile
     container_name: wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     secrets:
       - db_password
       - db_root_password
